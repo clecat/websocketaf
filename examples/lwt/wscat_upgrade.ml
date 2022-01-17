@@ -33,7 +33,7 @@ let websocket_handler u wsd =
 
 let error_handler = function
   | `Handshake_failure (rsp, _body) ->
-    Format.eprintf "Handshake failure: %a\n%!" Httpaf.Response.pp_hum rsp
+    Format.eprintf "Handshake failure: %a\n%!" Dream_httpaf.Response.pp_hum rsp
   | _ -> assert false
 
 let () =
@@ -60,25 +60,25 @@ let () =
     >>= fun () ->
 
     let nonce = "0123456789ABCDEF" in
-    Httpaf_lwt_unix.Client.create_connection socket >>= fun conn ->
+    Dream_httpaf_lwt_unix.Client.create_connection socket >>= fun conn ->
       let upgrade_request = Websocketaf.Handshake.create_request
         ~nonce
-        ~headers:Httpaf.Headers.(of_list
+        ~headers:Dream_httpaf.Headers.(of_list
           ["host", String.concat ":" [host; string_of_int !port]])
         "/"
       in
       let p, u = Lwt.wait () in
-      let request_body = Httpaf_lwt_unix.Client.request
+      let request_body = Dream_httpaf_lwt_unix.Client.request
         conn
         ~error_handler:(fun _ -> assert false)
         ~response_handler:(fun _response _response_body ->
           let ws_conn =
             Websocketaf.Client_connection.create (websocket_handler u)
           in
-          Httpaf_lwt_unix.Client.upgrade conn
-            (Gluten.make (module Websocketaf.Client_connection) ws_conn))
+          Dream_httpaf_lwt_unix.Client.upgrade conn
+            (Dream_gluten.make (module Websocketaf.Client_connection) ws_conn))
         upgrade_request
     in
-    Httpaf.Body.Writer.close request_body;
+    Dream_httpaf.Body.Writer.close request_body;
     p
   end

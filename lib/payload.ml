@@ -32,7 +32,7 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *----------------------------------------------------------------------------*)
 
-module IOVec = Httpaf.IOVec
+module IOVec = Dream_httpaf.IOVec
 
   type t =
   { faraday : Faraday.t

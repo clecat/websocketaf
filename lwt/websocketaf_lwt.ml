@@ -5,13 +5,13 @@ let sha1 s =
 
 include Websocketaf_lwt_intf
 
-module Server (Server_runtime: Gluten_lwt.Server) = struct
+module Server (Server_runtime: Dream_gluten_lwt.Server) = struct
   type socket = Server_runtime.socket
 
   (* TODO: should this error handler be a websocket error handler or an HTTP
    * error handler?*)
   let create_connection_handler
-    ?(config = Httpaf.Config.default)
+    ?(config = Dream_httpaf.Config.default)
     ~websocket_handler
     ~error_handler = fun client_addr socket ->
     let connection =
@@ -28,14 +28,14 @@ module Server (Server_runtime: Gluten_lwt.Server) = struct
       socket
 end
 
-module Client (Client_runtime: Gluten_lwt.Client) = struct
+module Client (Client_runtime: Dream_gluten_lwt.Client) = struct
   type t = Client_runtime.t
   type socket = Client_runtime.socket
 
   let connect
-      ?(config=Httpaf.Config.default)
+      ?(config=Dream_httpaf.Config.default)
       ~nonce ~host ~port ~resource ~error_handler ~websocket_handler socket =
-    let headers = Httpaf.Headers.of_list
+    let headers = Dream_httpaf.Headers.of_list
       ["host", String.concat ":" [host; string_of_int port]]
     in
     let connection =

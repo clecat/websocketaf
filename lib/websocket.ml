@@ -1,4 +1,4 @@
-module IOVec = Httpaf.IOVec
+module IOVec = Dream_httpaf.IOVec
 
 module Opcode = struct
   type standard_non_control =

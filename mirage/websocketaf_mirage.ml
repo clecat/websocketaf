@@ -35,7 +35,7 @@
 module Server (Flow : Mirage_flow.S) = struct
   type socket = Flow.flow
 
-  module Server_runtime = Websocketaf_lwt.Server (Gluten_mirage.Server (Flow))
+  module Server_runtime = Websocketaf_lwt.Server (Dream_gluten_mirage.Server (Flow))
 
   let create_connection_handler ?config ~websocket_handler ~error_handler =
     fun flow ->
@@ -56,7 +56,7 @@ module type Server = sig
   type socket
 
   val create_connection_handler
-    :  ?config : Httpaf.Config.t
+    :  ?config : Dream_httpaf.Config.t
     -> websocket_handler : (Wsd.t -> Server_connection.input_handlers)
     -> error_handler : Server_connection.error_handler
     -> socket
@@ -66,4 +66,4 @@ end
 module type Client = Websocketaf_lwt.Client
 
 module Client (Flow : Mirage_flow.S) =
-  Websocketaf_lwt.Client (Gluten_mirage.Client (Flow))
+  Websocketaf_lwt.Client (Dream_gluten_mirage.Client (Flow))

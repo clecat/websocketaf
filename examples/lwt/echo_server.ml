@@ -1,9 +1,9 @@
 let connection_handler : Unix.sockaddr -> Lwt_unix.file_descr -> unit Lwt.t =
-  let module Body = Httpaf.Body in
-  let module Headers = Httpaf.Headers in
-  let module Reqd = Httpaf.Reqd in
-  let module Response = Httpaf.Response in
-  let module Status = Httpaf.Status in
+  let module Body = Dream_httpaf.Body in
+  let module Headers = Dream_httpaf.Headers in
+  let module Reqd = Dream_httpaf.Reqd in
+  let module Response = Dream_httpaf.Response in
+  let module Status = Dream_httpaf.Status in
 
   let websocket_handler _client_address wsd =
     let frame ~opcode ~is_fin:_ ~len:_ payload =

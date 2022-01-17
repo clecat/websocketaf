@@ -34,7 +34,7 @@ let websocket_handler u wsd =
 
 let error_handler = function
   | `Handshake_failure (rsp, _body) ->
-    Format.eprintf "Handshake failure: %a\n%!" Httpaf.Response.pp_hum rsp
+    Format.eprintf "Handshake failure: %a\n%!" Dream_httpaf.Response.pp_hum rsp
   | _ -> assert false
 
 let () =

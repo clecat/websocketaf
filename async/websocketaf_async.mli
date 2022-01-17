@@ -2,7 +2,7 @@ open Async
 
 module Server : sig
   val create_connection_handler
-    :  ?config : Httpaf.Config.t
+    :  ?config : Dream_httpaf.Config.t
     -> websocket_handler : ( 'a
                            -> Websocketaf.Wsd.t
                            -> Websocketaf.Server_connection.input_handlers)

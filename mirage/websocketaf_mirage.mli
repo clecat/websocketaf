@@ -38,7 +38,7 @@ module type Server = sig
   type socket
 
   val create_connection_handler
-    :  ?config : Httpaf.Config.t
+    :  ?config : Dream_httpaf.Config.t
     -> websocket_handler : (Wsd.t -> Server_connection.input_handlers)
     -> error_handler : Server_connection.error_handler
     -> socket

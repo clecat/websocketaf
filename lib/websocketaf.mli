@@ -1,4 +1,4 @@
-module IOVec = Httpaf.IOVec
+module IOVec = Dream_httpaf.IOVec
 
 module Payload : sig
   type t
@@ -160,20 +160,20 @@ end
 module Handshake : sig
   val create_request
     :  nonce:string
-    -> headers:Httpaf.Headers.t
+    -> headers:Dream_httpaf.Headers.t
     -> string
-    -> Httpaf.Request.t
+    -> Dream_httpaf.Request.t
 
   val upgrade_headers
   :  sha1:(string -> string)
-  -> request_method:Httpaf.Method.t
-  -> Httpaf.Headers.t
+  -> request_method:Dream_httpaf.Method.t
+  -> Dream_httpaf.Headers.t
   -> ((string * string) list, string) result
 
   val respond_with_upgrade
-  : ?headers:Httpaf.Headers.t
+  : ?headers:Dream_httpaf.Headers.t
   -> sha1:(string -> string)
-  -> Httpaf.Reqd.t
+  -> Dream_httpaf.Reqd.t
   -> (unit -> unit)
   -> (unit, string) result
 end
@@ -182,8 +182,8 @@ module Client_connection : sig
   type t
 
   type error =
-    [ Httpaf.Client_connection.error
-    | `Handshake_failure of Httpaf.Response.t * Httpaf.Body.Reader.t ]
+    [ Dream_httpaf.Client_connection.error
+    | `Handshake_failure of Dream_httpaf.Response.t * Dream_httpaf.Body.Reader.t ]
 
   type input_handlers =
     { frame : opcode:Websocket.Opcode.t -> is_fin:bool -> len:int -> Payload.t -> unit
@@ -191,7 +191,7 @@ module Client_connection : sig
 
   val connect
     :  nonce             : string
-    -> ?headers          : Httpaf.Headers.t
+    -> ?headers          : Dream_httpaf.Headers.t
     -> sha1              : (string -> string)
     -> error_handler     : (error -> unit)
     -> websocket_handler : (Wsd.t -> input_handlers)

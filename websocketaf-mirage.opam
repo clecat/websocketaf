@@ -22,7 +22,7 @@ depends: [
   "lwt"
 ]
 pin-depends: [
-  [ "httpaf.dev" "git+https://github.com/anmonteiro/httpaf.git#fork" ]
-  [ "httpaf-lwt.dev" "git+https://github.com/anmonteiro/httpaf.git#fork" ]
+  [ "dream-httpaf.dev" "git+https://github.com/clecat/httpaf.git#fork" ]
+  [ "dream-httpaf-lwt.dev" "git+https://github.com/clecat/httpaf.git#fork" ]
 ]
 synopsis: "Mirage support for websocket/af"

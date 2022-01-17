@@ -1,3 +1,3 @@
-module Server = Websocketaf_lwt.Server (Gluten_lwt_unix.Server)
+module Server = Websocketaf_lwt.Server (Dream_gluten_lwt_unix.Server)
 
-module Client = Websocketaf_lwt.Client (Gluten_lwt_unix.Client)
+module Client = Websocketaf_lwt.Client (Dream_gluten_lwt_unix.Client)

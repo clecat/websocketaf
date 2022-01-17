@@ -1,4 +1,4 @@
-module IOVec = Httpaf.IOVec
+module IOVec = Dream_httpaf.IOVec
 
 type error = [ `Exn of exn ]
 

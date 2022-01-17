@@ -40,7 +40,7 @@ module type Server = sig
   type addr
 
   val create_connection_handler
-    :  ?config : Httpaf.Config.t
+    :  ?config : Dream_httpaf.Config.t
     -> websocket_handler : (addr -> Wsd.t -> Server_connection.input_handlers)
     -> error_handler : (addr -> Websocketaf.Server_connection.error_handler)
     -> (addr -> socket -> unit Lwt.t)
@@ -53,7 +53,7 @@ module type Client = sig
 
   (* Perform HTTP/1.1 handshake and upgrade to WS. *)
   val connect
-    :  ?config : Httpaf.Config.t
+    :  ?config : Dream_httpaf.Config.t
     -> nonce             : string
     -> host              : string
     -> port              : int

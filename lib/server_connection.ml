@@ -1,5 +1,5 @@
-module IOVec = Httpaf.IOVec
-module Server_handshake = Gluten.Server
+module IOVec = Dream_httpaf.IOVec
+module Server_handshake = Dream_gluten.Server
 
 type state =
   | Handshake of Server_handshake.t
@@ -32,16 +32,16 @@ let create ~sha1 ?error_handler websocket_handler =
       Websocket_connection.create ~mode:`Server ?error_handler websocket_handler
     in
     t.state <- Websocket ws_connection;
-    upgrade (Gluten.make (module Websocket_connection) ws_connection);
-  and request_handler { Gluten.reqd; upgrade } =
+    upgrade (Dream_gluten.make (module Websocket_connection) ws_connection);
+  and request_handler { Dream_gluten.reqd; upgrade } =
     let error msg =
-      let response = Httpaf.(Response.create
+      let response = Dream_httpaf.(Response.create
         ~headers:(Headers.of_list ["Connection", "close"])
         `Bad_request)
       in
-      Httpaf.Reqd.respond_with_string reqd response msg
+      Dream_httpaf.Reqd.respond_with_string reqd response msg
     in
-    let ret = Httpaf.Reqd.try_with reqd (fun () ->
+    let ret = Dream_httpaf.Reqd.try_with reqd (fun () ->
       match Handshake.respond_with_upgrade ~sha1 reqd (upgrade_handler upgrade) with
       | Ok () -> ()
       | Error msg -> error msg)
@@ -54,9 +54,9 @@ let create ~sha1 ?error_handler websocket_handler =
     { state =
         Handshake
           (Server_handshake.create_upgradable
-            ~protocol:(module Httpaf.Server_connection)
+            ~protocol:(module Dream_httpaf.Server_connection)
             ~create:
-              (Httpaf.Server_connection.create ?config:None ?error_handler:None)
+              (Dream_httpaf.Server_connection.create ?config:None ?error_handler:None)
             request_handler)
     ; websocket_handler
     }
